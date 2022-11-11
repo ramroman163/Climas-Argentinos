@@ -16,7 +16,7 @@ p{
 
 body{
 	font-size: 17px;
-	margin-bottom: 7.5rem;
+	margin-bottom: 8.5rem;
 	background-image: url("../img/rio_de_la_plata.jpg");
 	background-position: center;
 	background-size: cover;
@@ -98,7 +98,7 @@ section{
 footer{
 	position: absolute;
 	width: 100%;
-	height: 7.5rem;
+	height: 8.5rem;
 	bottom: 0;	
 	padding: 20px;
 	text-align: center;
@@ -167,6 +167,10 @@ form > input{
 	color: white;
 }
 
+.contenido-footer{
+	font-size: 13px;
+}
+
 #mapaIframe{
 	margin: 0;
 	padding: 0;
@@ -193,11 +197,11 @@ form > input{
 
 	body{
 		height: auto;
-		margin-bottom: 8rem;
+		margin-bottom: 8.5rem;
 	}
 
 	footer{
-		height: 8rem;
+		height: 8.5rem;
 	}
 
 	main{
@@ -246,6 +250,15 @@ form > input{
 		min-height: 60vh;
 	}
 
+}
+
+@media screen and (max-width: 570px) {
+	body{
+		margin-bottom: 9.3rem;
+	}
+	footer{
+		height: 9.3rem;
+	}
 }
 
 @media screen and (max-width: 450px) {

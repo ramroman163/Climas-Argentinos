@@ -6,6 +6,7 @@ function onSubmit(event) {
   var search = document.getElementById("search-box");
   buscar_ciudad(search.value);
   form.reset();
+  document.activeElement?.blur();
 }
 
 async function buscar_ciudad(search) {
