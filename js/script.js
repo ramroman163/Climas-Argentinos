@@ -71,26 +71,33 @@ function mostrar_datos_pantalla(json) {
 
 }
 
-function getDatetime(dt){
-  let date = new Date(dt*1000);
+function getDatetime(dt) {
+  let date = new Date(dt * 1000);
 
 
-  let datetime = (correctDatetime(date.getDate())+
-          "/"+(correctDatetime(date.getMonth()+1))+
-          "/"+correctDatetime(date.getFullYear())+
-          " "+correctDatetime(date.getHours())+
-          ":"+correctDatetime(date.getMinutes())+
-          ":"+correctDatetime(date.getSeconds()));
+  let datetime = (correctDatetime(date.getDate()) +
+    "/" + (correctDatetime(date.getMonth() + 1)) +
+    "/" + correctDatetime(date.getFullYear()) +
+    " " + correctDatetime(date.getHours()) +
+    ":" + correctDatetime(date.getMinutes()) +
+    ":" + correctDatetime(date.getSeconds()));
 
   return datetime;
 }
 
-function correctDatetime(number){
-  if (number < 10){
+function correctDatetime(number) {
+  if (number < 10) {
     let stringDate = '0' + number.toString();
     return stringDate;
   }
-  else{
+  else {
     return number;
   }
 }
+
+window.addEventListener("load", () => {
+  document.querySelector("body").classList.remove("cuerpo");
+  document.querySelector("footer").style.display = "block";
+  document.querySelector(".loader").style.opacity = 0;
+  document.querySelector(".loader").style.pointerEvents = "none";
+})

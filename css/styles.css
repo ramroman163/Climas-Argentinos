@@ -1,20 +1,150 @@
-*{
+* {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
 
-html{
+@keyframes ldio-traogdneixk {
+	0% {
+		opacity: 1
+	}
+
+	100% {
+		opacity: 0
+	}
+}
+
+.ldio-traogdneixk div {
+	left: 94px;
+	top: 48px;
+	position: absolute;
+	animation: ldio-traogdneixk linear 1.0204081632653061s infinite;
+	background: #504744;
+	width: 12px;
+	height: 24px;
+	border-radius: 6px / 12px;
+	transform-origin: 6px 52px;
+}
+
+.ldio-traogdneixk div:nth-child(1) {
+	transform: rotate(0deg);
+	animation-delay: -0.935374149659864s;
+	background: #504744;
+}
+
+.ldio-traogdneixk div:nth-child(2) {
+	transform: rotate(30deg);
+	animation-delay: -0.8503401360544218s;
+	background: #504744;
+}
+
+.ldio-traogdneixk div:nth-child(3) {
+	transform: rotate(60deg);
+	animation-delay: -0.7653061224489796s;
+	background: #504744;
+}
+
+.ldio-traogdneixk div:nth-child(4) {
+	transform: rotate(90deg);
+	animation-delay: -0.6802721088435374s;
+	background: #504744;
+}
+
+.ldio-traogdneixk div:nth-child(5) {
+	transform: rotate(120deg);
+	animation-delay: -0.5952380952380952s;
+	background: #504744;
+}
+
+.ldio-traogdneixk div:nth-child(6) {
+	transform: rotate(150deg);
+	animation-delay: -0.5102040816326531s;
+	background: #504744;
+}
+
+.ldio-traogdneixk div:nth-child(7) {
+	transform: rotate(180deg);
+	animation-delay: -0.4251700680272109s;
+	background: #504744;
+}
+
+.ldio-traogdneixk div:nth-child(8) {
+	transform: rotate(210deg);
+	animation-delay: -0.3401360544217687s;
+	background: #504744;
+}
+
+.ldio-traogdneixk div:nth-child(9) {
+	transform: rotate(240deg);
+	animation-delay: -0.25510204081632654s;
+	background: #504744;
+}
+
+.ldio-traogdneixk div:nth-child(10) {
+	transform: rotate(270deg);
+	animation-delay: -0.17006802721088435s;
+	background: #504744;
+}
+
+.ldio-traogdneixk div:nth-child(11) {
+	transform: rotate(300deg);
+	animation-delay: -0.08503401360544217s;
+	background: #504744;
+}
+
+.ldio-traogdneixk div:nth-child(12) {
+	transform: rotate(330deg);
+	animation-delay: 0s;
+	background: #504744;
+}
+
+.loadingio-spinner-spinner-6dyxzy2b1n9 {
+	width: 200px;
+	height: 200px;
+	display: inline-block;
+	overflow: hidden;
+	background: #000000;
+}
+
+.ldio-traogdneixk {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	transform: translateZ(0) scale(1);
+	backface-visibility: hidden;
+	transform-origin: 0 0;
+}
+
+.ldio-traogdneixk div {
+	box-sizing: content-box;
+}
+
+.loader {
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	background-color: #000000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: .3s ease;
+}
+
+.cuerpo {
+	overflow: hidden;
+}
+
+html {
 	min-height: 100%;
 	position: relative;
 }
 
-p{
+p {
 	margin: 0;
 	padding: 0;
 }
 
-body{
+body {
 	font-size: 17px;
 	margin-bottom: 8.5rem;
 	background-image: url("../img/rio_de_la_plata.jpg");
@@ -23,50 +153,52 @@ body{
 	background-repeat: no-repeat;
 }
 
-header{
+header {
 	padding: 20px;
 	width: 100%;
 	height: 5rem;
-	background-color: rgb(43, 43, 43, 0.7);;
+	background-color: rgb(43, 43, 43, 0.7);
+	;
 	border-bottom: 2px solid white;
 }
 
-h1{
+h1 {
 	font-family: 'Open Sans', sans-serif;
 	color: white;
 }
 
-.parte-datos > h3{
+.parte-datos>h3 {
 	/* margin-top: 1.25rem; */
 	font-weight: 400;
 	margin-top: auto;
 }
 
-.parte-mapa > h3{
+.parte-mapa>h3 {
 	font-weight: 400;
 	margin-bottom: 1.25rem;
 }
 
-main{
+main {
 	padding: 10px;
 	font-family: 'Roboto', sans-serif;
 	display: flex;
 	height: 85vh;
 }
 
-section{
+section {
 	border: 1px solid grey;
 }
 
-.parte-datos{
+.parte-datos {
 	background: rgba(0, 0, 0, 0.6);
 	width: 40%;
 	display: flex;
-    flex-direction: column;
+	flex-direction: column;
 	color: white;
 	padding: 15px;
 	margin-right: 0.5rem;
 }
+
 /* 
 .parte-mapa{
 	margin-top: 50px;
@@ -80,7 +212,7 @@ section{
 	align-self: center;
 } */
 
-.parte-mapa{
+.parte-mapa {
 	padding: 15px;
 	width: 60%;
 	background: rgba(0, 0, 0, 0.6);
@@ -89,17 +221,18 @@ section{
 	align-items: center;
 }
 
-#map{
+#map {
 	height: 90%;
 	width: 90%;
 	border: 2px solid grey;
 }
 
-footer{
+footer {
+	display: none;
 	position: absolute;
 	width: 100%;
 	height: 8.5rem;
-	bottom: 0;	
+	bottom: 0;
 	padding: 20px;
 	text-align: center;
 	border-top: 2px solid white;
@@ -107,12 +240,12 @@ footer{
 	color: white;
 }
 
-footer p{
+footer p {
 	margin-top: 5px;
 	font-family: 'Open Sans', sans-serif;
 }
 
-form > input{
+form>input {
 	font-size: 1.10rem;
 	padding: 3px 0;
 	height: 2.2rem;
@@ -125,7 +258,7 @@ form > input{
 }
 
 
-.contenedor-datos{
+.contenedor-datos {
 	/* margin-top: 1.25rem; */
 	display: flex;
 	flex-direction: column;
@@ -136,14 +269,14 @@ form > input{
 	transition: 1s ease;
 }
 
-.dato-clima > svg{
+.dato-clima>svg {
 	width: 22px;
 	height: 22px;
 	display: block;
 	margin-right: 3px;
 }
 
-.dato-clima{
+.dato-clima {
 	display: flex;
 	align-items: center;
 	padding: 10px;
@@ -152,98 +285,99 @@ form > input{
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
-.contenedor-mapa{
+.contenedor-mapa {
 	height: 21.875rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: stretch;
 }
 
-.fuentes{
+.fuentes {
 	font-size: 11px;
 }
 
-.fuentes a{
+.fuentes a {
 	color: white;
 }
 
-.contenido-footer{
+.contenido-footer {
 	font-size: 13px;
 }
 
-#mapaIframe{
+#mapaIframe {
 	margin: 0;
 	padding: 0;
 	width: 100%;
 	min-height: 100%;
 }
 
-@media screen and  (max-width: 1400px){
-	.parte-datos > h3{
+@media screen and (max-width: 1400px) {
+	.parte-datos>h3 {
 		/* margin-top: 1.25rem; */
 		font-weight: 400;
 		margin: 20px 0;
 	}
 
-	main{
+	main {
 		height: auto;
 	}
 }
 
 @media screen and (max-width: 1250px) {
-	html{
+	html {
 		height: auto;
 	}
 
-	body{
+	body {
 		height: auto;
 		margin-bottom: 8.5rem;
 	}
 
-	footer{
+	footer {
 		height: 8.5rem;
 	}
 
-	main{
+	main {
 		flex-direction: column;
 		justify-content: flex-start;
 		width: 100%;
 		height: auto;
 	}
 
-	form > input{
+	form>input {
 		width: 100%;
 	}
 
-	.parte-datos, .parte-mapa{
+	.parte-datos,
+	.parte-mapa {
 		width: 100%;
 		min-height: fit-content;
 	}
 
-	.parte-datos > h3{
+	.parte-datos>h3 {
 		/* margin-top: 1.25rem; */
 		font-weight: 400;
 		margin: 20px 0;
 	}
 
-	.parte-mapa{
+	.parte-mapa {
 		min-height: 50vh;
 	}
 
-	.parte-datos{
+	.parte-datos {
 		margin-bottom: 10px;
 	}
 
-	.dato-clima{
+	.dato-clima {
 		width: 100%;
 	}
 
-	#map{
+	#map {
 		width: 100%;
 		min-height: 60vh;
 	}
 
-	#mapaIframe{
+	#mapaIframe {
 		margin: 0;
 		padding: 0;
 		width: 100%;
@@ -253,25 +387,25 @@ form > input{
 }
 
 @media screen and (max-width: 570px) {
-	body{
+	body {
 		margin-bottom: 9.3rem;
 	}
-	footer{
+
+	footer {
 		height: 9.3rem;
 	}
 }
 
 @media screen and (max-width: 450px) {
-	body{
+	body {
 		font-size: 16px;
 	}
 
-	h1{
+	h1 {
 		font-size: 28px;
 	}
 
-	form > input{
+	form>input {
 		width: 100%;
 	}
 }
-
