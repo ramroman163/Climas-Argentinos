@@ -173,6 +173,11 @@ h1 {
 	margin-top: auto;
 }
 
+.aviso-input{
+	font-size: 12px;
+	margin: 10px 0 10px 0;
+}
+
 .parte-mapa>h3 {
 	font-weight: 400;
 	margin-bottom: 1.25rem;
@@ -256,11 +261,14 @@ form>input {
 	background: transparent;
 	color: white;
 }
-
+ 
+#lista-ciudades{
+	height: 200px;
+}
 
 .contenedor-datos {
-	/* margin-top: 1.25rem; */
-	display: flex;
+	display: none;
+	/* display: flex; */
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
@@ -316,10 +324,6 @@ form>input {
 		/* margin-top: 1.25rem; */
 		font-weight: 400;
 		margin: 20px 0;
-	}
-
-	main {
-		height: auto;
 	}
 }
 
