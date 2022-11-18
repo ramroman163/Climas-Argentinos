@@ -170,7 +170,7 @@ h1 {
 .parte-datos>h3 {
 	/* margin-top: 1.25rem; */
 	font-weight: 400;
-	margin-top: auto;
+	margin: 1rem 0;
 }
 
 .aviso-input{
@@ -263,7 +263,32 @@ form>input {
 }
  
 #lista-ciudades{
-	height: 200px;
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	gap: 10px;
+	list-style: none;
+}
+
+#lista-ciudades > button{
+	font-family: 'Roboto', sans-serif;
+	font-size: 17px;
+	border: none;
+	color: white;
+	background: transparent;
+	border-left: 2px solid white;
+	padding: 7px;
+	width: 100%;
+	text-align: left;
+	transition: .2s ease padding;
+}
+
+#lista-ciudades > button:hover{
+	cursor: pointer;
+	padding-left: 12px;
+	background: rgba(0, 0, 0, 0.3);
 }
 
 .contenedor-datos {
@@ -274,8 +299,8 @@ form>input {
 	justify-content: center;
 	gap: 10px;
 	margin: auto 0;
-	transition: 1s ease;
 }
+
 
 .dato-clima>svg {
 	width: 22px;
@@ -291,6 +316,21 @@ form>input {
 	width: 80%;
 	border: 1px solid grey;
 	background-color: rgba(0, 0, 0, 0.4);
+	transition: .3s ease;
+	animation: aparecer .3s ease-in;
+}
+
+.dato-clima > span, .dato-clima > p{
+	transition: .4s ease;
+}
+
+@keyframes aparecer {
+	0%{
+		width: 60%;
+	}
+	100%{
+		width: 80%;
+	}
 }
 
 .contenedor-mapa {

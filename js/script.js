@@ -22,22 +22,31 @@ async function buscar_ciudad(busqueda) {
   fetch(url)
     // Exito
     .then(response => response.json())  // convertir a json
-    .then(json => transformarALista(json))    //imprimir los datos en la consola
+    .then(json => transformarALista(json,busqueda))    //imprimir los datos en la consola
     .catch(err => console.log('Solicitud fallida', err));
 }
 
-/*
-async function buscar_clima(busqueda) {
+
+async function buscar_clima_por_nombre(busqueda) {
   let url = 'https://api.openweathermap.org/data/2.5/weather?q=' + busqueda + ',AR&lang=es&appid=5fab11b8cdf9affc7e1236fe4909ad05&units=metric'
   fetch(url)
     // Exito
     .then(response => response.json())  // convertir a json
-    .then(json => mostrarDatos(json))    //imprimir los datos en la consola
+    .then(json => setTimeout(mostrarDatos(json), 2000))    //imprimir los datos en la consola
     .catch(err => console.log('Solicitud fallida', err));
 }
-*/
 
-function transformarALista(json) {
+async function buscar_clima_por_coord(lat,lon,busqueda) {
+  let url = 'https://api.openweathermap.org/data/2.5/weather?' + 'lat=' + lat + '&lon=' + lon + '&lang=es&appid=5fab11b8cdf9affc7e1236fe4909ad05&units=metric';
+  fetch(url)
+    // Exito
+    .then(response => response.json())  // convertir a json
+    .then(json => setTimeout(mostrarDatos(json,busqueda), 2000))    //imprimir los datos en la consola
+    .catch(err => console.log('Solicitud fallida', err));
+}
+
+
+function transformarALista(json,busqueda) {
   for (let i = 0; i < json.length; i++) {
     listaCiudadesIguales.push(json[i]);
   }
@@ -46,45 +55,52 @@ function transformarALista(json) {
   //   console.log(listaCiudadesIguales[i]);
   // }
   // console.log(listaCiudadesIguales.length);
-
   let cantidadCiudades = listaCiudadesIguales.length;
-  crearElementosLista(cantidadCiudades);
+  verificarCiudad(cantidadCiudades,busqueda);
+  // crearElementosLista(cantidadCiudades);
   //crearElementosLista(ciudadesIguales);
 }
-/*
-function verificarCiudad() {
-  // if(listaCiudadesIguales.length == 1){
-  //   document.querySelector(".contenedor-datos").style.display = "flex";
-  //   buscar_clima(listaCiudadesIguales[0]["name"]);
-  // }
-  // else if(listaCiudadesIguales[0]["state"] == listaCiudadesIguales[1]["state"]){
-  //   document.querySelector(".contenedor-datos").style.display = "flex";
-  //   buscar_clima(listaCiudadesIguales[0]["name"]);
-  // }
-  // else{
-    crearElementosLista();
-  //}
-}*/
+
+function verificarCiudad(cantidadCiudades,busqueda) {
+  if (cantidadCiudades == 1) {
+    document.querySelector("#lista-ciudades").style.display = "none";
+    document.querySelector(".contenedor-datos").style.display = "flex";
+    buscar_clima_por_coord(listaCiudadesIguales[0]["lat"], listaCiudadesIguales[0]["lon"],busqueda);
+  }
+  else if (listaCiudadesIguales[0]["state"] == listaCiudadesIguales[1]["state"]) {
+    document.querySelector("#lista-ciudades").style.display = "none";
+    document.querySelector(".contenedor-datos").style.display = "flex";
+    buscar_clima_por_coord(listaCiudadesIguales[0]["lat"], listaCiudadesIguales[0]["lon"],busqueda);
+  }
+  else {
+    crearElementosLista(cantidadCiudades);
+  }
+}
 
 function crearElementosLista(cantidadCiudades) {
+  document.querySelector("#lista-ciudades").style.display = "flex";
+  document.querySelector(".contenedor-datos").style.display = "none";
+  let tituloBusqueda = document.getElementById("ciudad");
+  tituloBusqueda.textContent = "Ciudades";
   // console.log("ENTRE A ELEMENTOSLISTA");
   // console.log("LARGO CIUDADES: ");
   // console.log(cantidadCiudades);
-  for (let i=0; i<cantidadCiudades; i++) {
+  for (let i = 0; i < cantidadCiudades; i++) {
     let elementoLista = document.getElementById("lista-ciudades");
     // console.log("ENTRE AL FOR");
     let locacion = listaCiudadesIguales[i]["name"] + ", " + listaCiudadesIguales[i]["state"];
-    let li = document.createElement("li");
-    let liText = document.createTextNode(locacion);
-    li.appendChild(liText);
-    elementoLista.appendChild(li);
+    let botonCiudad = document.createElement("button");
+    let textoBoton = document.createTextNode(locacion);
+    botonCiudad.appendChild(textoBoton);
+    elementoLista.appendChild(botonCiudad);
   }
 
 }
 
-
-function mostrarDatos(json) {
-  let city = json["name"];
+function mostrarDatos(json, busqueda) {
+  //let city = json["name"];
+  let ciudad = busqueda.toString();
+  let city = ciudad[0].toUpperCase() + ciudad.slice(1);
 
   let time = json["dt"];
 
@@ -170,8 +186,8 @@ function resetCiudades() {
   var elementoLista = document.getElementById("lista-ciudades");
 
   while (elementoLista.firstChild) {
-      elementoLista.removeChild(elementoLista.firstChild);
+    elementoLista.removeChild(elementoLista.firstChild);
   }
-  
+
   listaCiudadesIguales = [];
 }
