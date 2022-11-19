@@ -1,5 +1,5 @@
 var listaCiudadesIguales = [];
-
+var listaCoordernadasCiudadesIguales = [];
 var form = document.getElementById("search-form");
 form.addEventListener("submit", onSubmit, true);
 
@@ -12,7 +12,6 @@ function onSubmit(event) {
 
 function main(busqueda) {
   buscar_ciudad(busqueda);
-  // verificarCiudad();
   document.activeElement?.blur();
   form.reset();
 }
@@ -22,7 +21,7 @@ async function buscar_ciudad(busqueda) {
   fetch(url)
     // Exito
     .then(response => response.json())  // convertir a json
-    .then(json => transformarALista(json,busqueda))    //imprimir los datos en la consola
+    .then(json => transformarALista(json, busqueda))    //imprimir los datos en la consola
     .catch(err => console.log('Solicitud fallida', err));
 }
 
@@ -36,17 +35,16 @@ async function buscar_clima_por_nombre(busqueda) {
     .catch(err => console.log('Solicitud fallida', err));
 }
 
-async function buscar_clima_por_coord(lat,lon,busqueda) {
+async function buscar_clima_por_coord(lat, lon, busqueda) {
   let url = 'https://api.openweathermap.org/data/2.5/weather?' + 'lat=' + lat + '&lon=' + lon + '&lang=es&appid=5fab11b8cdf9affc7e1236fe4909ad05&units=metric';
   fetch(url)
     // Exito
     .then(response => response.json())  // convertir a json
-    .then(json => setTimeout(mostrarDatos(json,busqueda), 2000))    //imprimir los datos en la consola
+    .then(json => setTimeout(mostrarDatos(json, busqueda), 2000))    //imprimir los datos en la consola
     .catch(err => console.log('Solicitud fallida', err));
 }
 
-
-function transformarALista(json,busqueda) {
+function transformarALista(json, busqueda) {
   for (let i = 0; i < json.length; i++) {
     listaCiudadesIguales.push(json[i]);
   }
@@ -56,32 +54,34 @@ function transformarALista(json,busqueda) {
   // }
   // console.log(listaCiudadesIguales.length);
   let cantidadCiudades = listaCiudadesIguales.length;
-  verificarCiudad(cantidadCiudades,busqueda);
+  verificarCiudad(cantidadCiudades, busqueda);
   // crearElementosLista(cantidadCiudades);
   //crearElementosLista(ciudadesIguales);
 }
 
-function verificarCiudad(cantidadCiudades,busqueda) {
+function verificarCiudad(cantidadCiudades, busqueda) {
   if (cantidadCiudades == 1) {
     document.querySelector("#lista-ciudades").style.display = "none";
     document.querySelector(".contenedor-datos").style.display = "flex";
-    buscar_clima_por_coord(listaCiudadesIguales[0]["lat"], listaCiudadesIguales[0]["lon"],busqueda);
+    buscar_clima_por_coord(listaCiudadesIguales[0]["lat"], listaCiudadesIguales[0]["lon"], busqueda);
   }
   else if (listaCiudadesIguales[0]["state"] == listaCiudadesIguales[1]["state"]) {
     document.querySelector("#lista-ciudades").style.display = "none";
     document.querySelector(".contenedor-datos").style.display = "flex";
-    buscar_clima_por_coord(listaCiudadesIguales[0]["lat"], listaCiudadesIguales[0]["lon"],busqueda);
+    buscar_clima_por_coord(listaCiudadesIguales[0]["lat"], listaCiudadesIguales[0]["lon"], busqueda);
   }
   else {
-    crearElementosLista(cantidadCiudades);
+    guardarCoordenadas(cantidadCiudades);
+    crearElementosLista(cantidadCiudades, busqueda);
   }
 }
 
-function crearElementosLista(cantidadCiudades) {
+function crearElementosLista(cantidadCiudades, busqueda) {
   document.querySelector("#lista-ciudades").style.display = "flex";
   document.querySelector(".contenedor-datos").style.display = "none";
   let tituloBusqueda = document.getElementById("ciudad");
-  tituloBusqueda.textContent = "Ciudades";
+  tituloBusqueda.innerHTML = "Ciudades";
+
   // console.log("ENTRE A ELEMENTOSLISTA");
   // console.log("LARGO CIUDADES: ");
   // console.log(cantidadCiudades);
@@ -91,10 +91,51 @@ function crearElementosLista(cantidadCiudades) {
     let locacion = listaCiudadesIguales[i]["name"] + ", " + listaCiudadesIguales[i]["state"];
     let botonCiudad = document.createElement("button");
     let textoBoton = document.createTextNode(locacion);
+    botonCiudad.classList.add("botones-ciudades");
+    let valorId = "boton-" + i;
+    botonCiudad.setAttribute("id", valorId);
     botonCiudad.appendChild(textoBoton);
     elementoLista.appendChild(botonCiudad);
   }
+  tomarBotonCiudad(busqueda);
+}
 
+function guardarCoordenadas(cantidadCiudades) {
+  for (let i = 0; i < cantidadCiudades; i++) {
+    let coord = { "lat": listaCiudadesIguales[i]["lat"], "lon": listaCiudadesIguales[i]["lon"] };
+    listaCoordernadasCiudadesIguales.push(coord);
+  }
+
+  //console.log(listaCoordernadasCiudadesIguales);
+}
+
+function tomarBotonCiudad(busqueda) {
+  let listabotonesCiudades = document.querySelectorAll(".botones-ciudades");
+
+  listabotonesCiudades.forEach(boton => {
+    let idBoton = boton.getAttribute("id");
+    boton.addEventListener("click", () => comprobarClickBoton(idBoton, busqueda));
+
+  });
+
+  // for (let i = 0; i < listabotonesCiudades.length; i++) {
+  // }
+
+}
+
+function comprobarClickBoton(idBoton, busqueda) {
+  document.querySelector("#lista-ciudades").style.display = "none";
+  console.log("CLICK EN ");
+  let posicionBoton = idBoton.slice("6");
+  let pos = parseInt(posicionBoton);
+  console.log(pos);
+
+  let lat = listaCoordernadasCiudadesIguales[pos]["lat"];
+  let lon = listaCoordernadasCiudadesIguales[pos]["lon"];
+  
+  document.querySelector(".contenedor-datos").style.display = "flex";
+  buscar_clima_por_coord(lat, lon, busqueda);
+  
 }
 
 function mostrarDatos(json, busqueda) {
@@ -190,4 +231,5 @@ function resetCiudades() {
   }
 
   listaCiudadesIguales = [];
+  listaCoordernadasCiudadesIguales = [];
 }
