@@ -18,7 +18,7 @@ function main(busqueda) {
 }
 
 async function buscar_ciudad(busqueda) {
-  let url = 'http://api.openweathermap.org/geo/1.0/direct?q=' + busqueda + ',AR&limit=7&lang=sp&appid=5fab11b8cdf9affc7e1236fe4909ad05'
+  let url = 'https://api.openweathermap.org/geo/1.0/direct?q=' + busqueda + ',AR&limit=7&lang=sp&appid=5fab11b8cdf9affc7e1236fe4909ad05'
   fetch(url)
     .then(response => response.json())  
     .then(json => transformarALista(json, busqueda))   
