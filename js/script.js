@@ -189,8 +189,17 @@ function getDatetime(dt) {
 
 function correctCityName(city, prov){
   let correctCity = city.toString();
-  correctCity = correctCity[0].toUpperCase() + correctCity.slice(1);
 
+  if(correctCity.includes(" ")){
+    let aux = correctCity.split(" ");
+    let cityPartName1 = aux[0][0].toUpperCase() + aux[0].slice(1);
+    let cityPartName2 = aux[1][0].toUpperCase() + aux[1].slice(1);
+    correctCity = cityPartName1 + " " + cityPartName2;
+  }
+  else{
+    correctCity = correctCity[0].toUpperCase() + correctCity.slice(1);
+  }
+  
   correctCity = correctCity + ", " + correctProvinceName(prov);
 
   return correctCity;
