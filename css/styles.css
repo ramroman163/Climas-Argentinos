@@ -146,7 +146,7 @@ p {
 
 body {
 	font-size: 17px;
-	margin-bottom: 8.5rem;
+	margin-bottom: 8rem;
 	background-image: url("../img/rio_de_la_plata.jpg");
 	background-position: center;
 	background-size: cover;
@@ -154,6 +154,8 @@ body {
 }
 
 header {
+	display: flex;
+	align-items: center;
 	padding: 20px;
 	width: 100%;
 	height: 5rem;
@@ -171,6 +173,7 @@ h1 {
 	/* margin-top: 1.25rem; */
 	font-weight: 400;
 	margin: 1rem 0;
+	transition: .3s ease;
 }
 
 .aviso-input{
@@ -187,7 +190,8 @@ main {
 	padding: 10px;
 	font-family: 'Roboto', sans-serif;
 	display: flex;
-	height: 85vh;
+	min-height: 85vh;
+	height: auto;
 }
 
 section {
@@ -204,19 +208,6 @@ section {
 	margin-right: 0.5rem;
 }
 
-/* 
-.parte-mapa{
-	margin-top: 50px;
-	height: 100%;
-	width: 60%;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-} */
-/* .parte-mapa > .contenedor-mapa{
-	align-self: center;
-} */
-
 .parte-mapa {
 	padding: 15px;
 	width: 60%;
@@ -229,14 +220,18 @@ section {
 #map {
 	height: 90%;
 	width: 90%;
+	transition: .4s ease;
 	border: 2px solid grey;
 }
 
 footer {
 	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 	position: absolute;
 	width: 100%;
-	height: 8.5rem;
+	height: 8rem;
 	bottom: 0;
 	padding: 20px;
 	text-align: center;
@@ -274,7 +269,7 @@ form>input {
 
 #lista-ciudades > button{
 	font-family: 'Roboto', sans-serif;
-	font-size: 17px;
+	font-size: 18px;
 	border: none;
 	color: white;
 	background: transparent;
@@ -283,6 +278,19 @@ form>input {
 	width: 100%;
 	text-align: left;
 	transition: .2s ease padding;
+	animation: aparacionCiudades .3s ease;
+}
+
+@keyframes aparacionCiudades{
+	0%{
+		overflow: hidden;
+		border-left: 6px solid white;
+		width: 60%;
+	}
+	100%{
+		border-left: 2px solid white;
+		width: 100%;
+	}
 }
 
 #lista-ciudades > button:hover{
@@ -293,7 +301,6 @@ form>input {
 
 .contenedor-datos {
 	display: none;
-	/* display: flex; */
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
@@ -317,15 +324,16 @@ form>input {
 	border: 1px solid grey;
 	background-color: rgba(0, 0, 0, 0.4);
 	transition: .3s ease;
-	animation: aparecer .3s ease-in;
+	animation: aparacionDatos .4s ease;
 }
 
 .dato-clima > span, .dato-clima > p{
 	transition: .4s ease;
 }
 
-@keyframes aparecer {
+@keyframes aparacionDatos {
 	0%{
+		overflow: hidden;
 		width: 60%;
 	}
 	100%{
@@ -374,11 +382,11 @@ form>input {
 
 	body {
 		height: auto;
-		margin-bottom: 8.5rem;
+		margin-bottom: 8rem;
 	}
 
 	footer {
-		height: 8.5rem;
+		height: 8rem;
 	}
 
 	main {
@@ -396,6 +404,16 @@ form>input {
 	.parte-mapa {
 		width: 100%;
 		min-height: fit-content;
+	}
+
+	@keyframes aparacionDatos {
+		0%{
+			overflow: hidden;
+			width: 80%;
+		}
+		100%{
+			width: 100%;
+		}
 	}
 
 	.parte-datos>h3 {
@@ -432,17 +450,22 @@ form>input {
 
 @media screen and (max-width: 570px) {
 	body {
-		margin-bottom: 9.3rem;
+		margin-bottom: 9rem;
 	}
 
 	footer {
-		height: 9.3rem;
+		height: 9rem;
 	}
 }
 
 @media screen and (max-width: 450px) {
 	body {
 		font-size: 16px;
+	}
+
+	header{
+		display: flex;
+		align-items: center;
 	}
 
 	h1 {

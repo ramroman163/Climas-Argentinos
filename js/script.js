@@ -1,4 +1,5 @@
 var listaCiudadesIguales = [];
+var listaProvinciasCiudades = [];
 var listaCoordernadasCiudadesIguales = [];
 var form = document.getElementById("search-form");
 form.addEventListener("submit", onSubmit, true);
@@ -19,9 +20,8 @@ function main(busqueda) {
 async function buscar_ciudad(busqueda) {
   let url = 'http://api.openweathermap.org/geo/1.0/direct?q=' + busqueda + ',AR&limit=7&lang=sp&appid=5fab11b8cdf9affc7e1236fe4909ad05'
   fetch(url)
-    // Exito
-    .then(response => response.json())  // convertir a json
-    .then(json => transformarALista(json, busqueda))    //imprimir los datos en la consola
+    .then(response => response.json())  
+    .then(json => transformarALista(json, busqueda))   
     .catch(err => console.log('Solicitud fallida', err));
 }
 
@@ -29,18 +29,17 @@ async function buscar_ciudad(busqueda) {
 async function buscar_clima_por_nombre(busqueda) {
   let url = 'https://api.openweathermap.org/data/2.5/weather?q=' + busqueda + ',AR&lang=es&appid=5fab11b8cdf9affc7e1236fe4909ad05&units=metric'
   fetch(url)
-    // Exito
-    .then(response => response.json())  // convertir a json
-    .then(json => setTimeout(mostrarDatos(json), 2000))    //imprimir los datos en la consola
+    .then(response => response.json())  
+    .then(json => setTimeout(mostrarDatos(json), 2000))   
     .catch(err => console.log('Solicitud fallida', err));
 }
 
-async function buscar_clima_por_coord(lat, lon, busqueda) {
+async function buscar_clima_por_coord(lat, lon, busqueda, prov) {
   let url = 'https://api.openweathermap.org/data/2.5/weather?' + 'lat=' + lat + '&lon=' + lon + '&lang=es&appid=5fab11b8cdf9affc7e1236fe4909ad05&units=metric';
   fetch(url)
     // Exito
-    .then(response => response.json())  // convertir a json
-    .then(json => setTimeout(mostrarDatos(json, busqueda), 2000))    //imprimir los datos en la consola
+    .then(response => response.json())  
+    .then(json => setTimeout(mostrarDatos(json, busqueda, prov), 2000))   
     .catch(err => console.log('Solicitud fallida', err));
 }
 
@@ -48,47 +47,37 @@ function transformarALista(json, busqueda) {
   for (let i = 0; i < json.length; i++) {
     listaCiudadesIguales.push(json[i]);
   }
-  // console.log("NUEVA CIUDAD");
-  // for(let i=0; i<listaCiudadesIguales.length; i++){
-  //   console.log(listaCiudadesIguales[i]);
-  // }
-  // console.log(listaCiudadesIguales.length);
   let cantidadCiudades = listaCiudadesIguales.length;
   verificarCiudad(cantidadCiudades, busqueda);
-  // crearElementosLista(cantidadCiudades);
-  //crearElementosLista(ciudadesIguales);
 }
 
 function verificarCiudad(cantidadCiudades, busqueda) {
   if (cantidadCiudades == 1) {
     document.querySelector("#lista-ciudades").style.display = "none";
     document.querySelector(".contenedor-datos").style.display = "flex";
-    buscar_clima_por_coord(listaCiudadesIguales[0]["lat"], listaCiudadesIguales[0]["lon"], busqueda);
+    buscar_clima_por_coord(listaCiudadesIguales[0]["lat"], listaCiudadesIguales[0]["lon"], busqueda, listaCiudadesIguales[0]["state"]);
   }
   else if (listaCiudadesIguales[0]["state"] == listaCiudadesIguales[1]["state"]) {
     document.querySelector("#lista-ciudades").style.display = "none";
     document.querySelector(".contenedor-datos").style.display = "flex";
-    buscar_clima_por_coord(listaCiudadesIguales[0]["lat"], listaCiudadesIguales[0]["lon"], busqueda);
+    buscar_clima_por_coord(listaCiudadesIguales[0]["lat"], listaCiudadesIguales[0]["lon"], busqueda, listaCiudadesIguales[0]["state"]);
   }
   else {
-    guardarCoordenadas(cantidadCiudades);
+    guardarCoordenadasYProvincias(cantidadCiudades);
     crearElementosLista(cantidadCiudades, busqueda);
   }
 }
 
 function crearElementosLista(cantidadCiudades, busqueda) {
+  document.getElementById("map").innerHTML = '';
   document.querySelector("#lista-ciudades").style.display = "flex";
   document.querySelector(".contenedor-datos").style.display = "none";
   let tituloBusqueda = document.getElementById("ciudad");
   tituloBusqueda.innerHTML = "Ciudades";
 
-  // console.log("ENTRE A ELEMENTOSLISTA");
-  // console.log("LARGO CIUDADES: ");
-  // console.log(cantidadCiudades);
   for (let i = 0; i < cantidadCiudades; i++) {
     let elementoLista = document.getElementById("lista-ciudades");
-    // console.log("ENTRE AL FOR");
-    let locacion = listaCiudadesIguales[i]["name"] + ", " + listaCiudadesIguales[i]["state"];
+    let locacion = listaCiudadesIguales[i]["name"] + ", " + correctProvinceName(listaCiudadesIguales[i]["state"]);
     let botonCiudad = document.createElement("button");
     let textoBoton = document.createTextNode(locacion);
     botonCiudad.classList.add("botones-ciudades");
@@ -100,13 +89,13 @@ function crearElementosLista(cantidadCiudades, busqueda) {
   tomarBotonCiudad(busqueda);
 }
 
-function guardarCoordenadas(cantidadCiudades) {
+function guardarCoordenadasYProvincias(cantidadCiudades) {
   for (let i = 0; i < cantidadCiudades; i++) {
     let coord = { "lat": listaCiudadesIguales[i]["lat"], "lon": listaCiudadesIguales[i]["lon"] };
     listaCoordernadasCiudadesIguales.push(coord);
+    let province = listaCiudadesIguales[i]["state"];
+    listaProvinciasCiudades.push(province);
   }
-
-  //console.log(listaCoordernadasCiudadesIguales);
 }
 
 function tomarBotonCiudad(busqueda) {
@@ -115,33 +104,25 @@ function tomarBotonCiudad(busqueda) {
   listabotonesCiudades.forEach(boton => {
     let idBoton = boton.getAttribute("id");
     boton.addEventListener("click", () => comprobarClickBoton(idBoton, busqueda));
-
   });
-
-  // for (let i = 0; i < listabotonesCiudades.length; i++) {
-  // }
-
 }
 
 function comprobarClickBoton(idBoton, busqueda) {
   document.querySelector("#lista-ciudades").style.display = "none";
-  console.log("CLICK EN ");
   let posicionBoton = idBoton.slice("6");
   let pos = parseInt(posicionBoton);
-  console.log(pos);
 
   let lat = listaCoordernadasCiudadesIguales[pos]["lat"];
   let lon = listaCoordernadasCiudadesIguales[pos]["lon"];
+  let prov = listaProvinciasCiudades[pos];
   
   document.querySelector(".contenedor-datos").style.display = "flex";
-  buscar_clima_por_coord(lat, lon, busqueda);
+  buscar_clima_por_coord(lat, lon, busqueda, prov);
   
 }
 
-function mostrarDatos(json, busqueda) {
-  //let city = json["name"];
-  let ciudad = busqueda.toString();
-  let city = ciudad[0].toUpperCase() + ciudad.slice(1);
+function mostrarDatos(json, busqueda, prov) {
+  let city = correctCityName(busqueda, prov);
 
   let time = json["dt"];
 
@@ -152,7 +133,9 @@ function mostrarDatos(json, busqueda) {
   let cloud = json["clouds"]["all"];
 
   let latitude = json["coord"]["lat"];
+  latitude = latitude.toFixed(2);
   let longitude = json["coord"]["lon"];
+  longitude = longitude.toFixed(2);
 
   let desc = json["weather"][0]["description"];
   let description = desc[0].toUpperCase() + desc.slice(1);
@@ -205,6 +188,24 @@ function getDatetime(dt) {
   return datetime;
 }
 
+function correctCityName(city, prov){
+  let correctCity = city.toString();
+  correctCity = correctCity[0].toUpperCase() + correctCity.slice(1);
+
+  correctCity = correctCity + ", " + correctProvinceName(prov);
+
+  return correctCity;
+}
+
+function correctProvinceName(prov){
+  let correctProvince = "";
+  let provinceName = prov.split(" Province");
+  
+  correctProvince = provinceName[0]
+
+  return correctProvince;
+}
+
 function correctDatetime(number) {
   if (number < 10) {
     let stringDate = '0' + number.toString();
@@ -217,19 +218,20 @@ function correctDatetime(number) {
 
 window.addEventListener("load", () => {
   document.querySelector("body").classList.remove("cuerpo");
-  document.querySelector("footer").style.display = "block";
+  document.querySelector("footer").style.display = "flex";
   document.querySelector(".loader").style.opacity = 0;
   document.querySelector(".loader").style.pointerEvents = "none";
 })
 
 function resetCiudades() {
 
-  var elementoLista = document.getElementById("lista-ciudades");
+  var listItem = document.getElementById("lista-ciudades");
 
-  while (elementoLista.firstChild) {
-    elementoLista.removeChild(elementoLista.firstChild);
+  while (listItem.firstChild) {
+    listItem.removeChild(listItem.firstChild);
   }
 
   listaCiudadesIguales = [];
   listaCoordernadasCiudadesIguales = [];
+  listaProvinciasCiudades = [];
 }
