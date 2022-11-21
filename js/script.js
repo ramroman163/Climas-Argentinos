@@ -26,20 +26,19 @@ async function buscar_ciudad(busqueda) {
 }
 
 
-async function buscar_clima_por_nombre(busqueda) {
-  let url = 'https://api.openweathermap.org/data/2.5/weather?q=' + busqueda + ',AR&lang=es&appid=5fab11b8cdf9affc7e1236fe4909ad05&units=metric'
-  fetch(url)
-    .then(response => response.json())  
-    .then(json => setTimeout(mostrarDatos(json), 2000))   
-    .catch(err => console.log('Solicitud fallida', err));
-}
+// async function buscar_clima_por_nombre(busqueda) {
+//   let url = 'https://api.openweathermap.org/data/2.5/weather?q=' + busqueda + ',AR&lang=es&appid=5fab11b8cdf9affc7e1236fe4909ad05&units=metric'
+//   fetch(url)
+//     .then(response => response.json())  
+//     .then(json => mostrarDatos(json))   
+//     .catch(err => console.log('Solicitud fallida', err));
+// }
 
 async function buscar_clima_por_coord(lat, lon, busqueda, prov) {
   let url = 'https://api.openweathermap.org/data/2.5/weather?' + 'lat=' + lat + '&lon=' + lon + '&lang=es&appid=5fab11b8cdf9affc7e1236fe4909ad05&units=metric';
   fetch(url)
-    // Exito
     .then(response => response.json())  
-    .then(json => setTimeout(mostrarDatos(json, busqueda, prov), 2000))   
+    .then(json => mostrarDatos(json, busqueda, prov))   
     .catch(err => console.log('Solicitud fallida', err));
 }
 
